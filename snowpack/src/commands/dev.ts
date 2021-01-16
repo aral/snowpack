@@ -392,9 +392,11 @@ export async function startDevServer(commandOptions: CommandOptions): Promise<Sn
   });
 
   const readCredentials = async (cwd: string) => {
+    const certFile = config.devOptions.cert || path.join(cwd, 'snowpack.crt');
+    const keyFile = config.devOptions.key || path.join(cwd, 'snowpack.key');
     const [cert, key] = await Promise.all([
-      fs.readFile(path.join(cwd, 'snowpack.crt')),
-      fs.readFile(path.join(cwd, 'snowpack.key')),
+      fs.readFile(certFile),
+      fs.readFile(keyFile),
     ]);
 
     return {
@@ -410,11 +412,16 @@ export async function startDevServer(commandOptions: CommandOptions): Promise<Sn
       credentials = await readCredentials(cwd);
     } catch (e) {
       logger.error(
-        `✘ No HTTPS credentials found! Missing Files:  ${colors.bold(
-          'snowpack.crt',
-        )}, ${colors.bold('snowpack.key')}`,
+        `✘ No HTTPS credentials found!`,
       );
-      logger.info(`You can automatically generate credentials for your project via either:
+      logger.info(`You can specify HTTPS credentials via either:
+
+  - Including ${colors.yellow('snowpack.crt')} and ${colors.yellow('snowpack.key')} files in your project folder.
+
+  - Specifying the paths to your HTTPS certificate and private key file using the
+    ${colors.yellow(`devOptions${colors.bold('.cert')}`)} and ${colors.yellow(`devOptions${colors.bold('.key')}`)} properties in your Snowpack configuration.
+
+    You can automatically generate credentials for your project via either:
 
   - ${colors.cyan('devcert')}: ${colors.yellow('npx devcert-cli generate localhost')}
     https://github.com/davewasmer/devcert-cli (no install required)
@@ -422,7 +429,6 @@ export async function startDevServer(commandOptions: CommandOptions): Promise<Sn
   - ${colors.cyan('mkcert')}: ${colors.yellow(
         'mkcert -install && mkcert -key-file snowpack.key -cert-file snowpack.crt localhost',
       )}
-
     https://github.com/FiloSottile/mkcert (install required)`);
       process.exit(1);
     }

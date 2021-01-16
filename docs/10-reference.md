@@ -195,6 +195,10 @@ Options:
   - When HMR is enabled, toggles whether or not a browser overlay should display javascript errors.
 - **`devOptions.secure`** | `boolean`
   - Toggles whether or not Snowpack dev server should use HTTPS with HTTP2 enabled.
+- ** `devOptions.cert`** | `string` | Default: `snowpack.crt`
+  - Path to the TLS certificate to use for secure servers. If not specified, looks for a file called "snowpack.crt" in the directory being served.
+- ** `devOptions.key`** | `string` | Default: `snowpack.key`
+  - Path to the TLS private key to use for secure servers. If not specified, looks for a file called "snowpack.key" in the directory being served.
 - **`devOptions.out`** | `string` | Default: `"build"`
   - _NOTE:_ Deprecated, see `buildOptions.out`.
   - The local directory that we output your final build to.
