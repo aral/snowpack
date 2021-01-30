@@ -1,26 +1,33 @@
-<p><a href="https://osawards.com/javascript/2020">
-  <img src="https://www.snowpack.dev/img/JSAwardWinner.png"   />
-</a></p>
+<h1>Snowflake</h1>
 
-<a href="https://github.com/snowpackjs/snowpack/actions">
-  <img src="https://github.com/snowpackjs/snowpack/workflows/CI/badge.svg" alt="CI" />
-</a> <a href="https://discord.gg/snowpack"><img alt="Join us on Discord!" src="https://img.shields.io/discord/712696926406967308.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2"/></a>
+This is a lightweight fork of [Snowpack](https://snowpack.dev) that I’m evaluating for use in [Place](https://github.com/small-tech/place).
 
-<h1>Snowpack</h1>
+Unless you’re using Snowpack as middleware and need to following niche functionality, you probably want to use the [original upstream](github.com/snowpackjs/snowpack/).
 
-Snowpack is a lightning-fast frontend build tool, designed to leverage JavaScript's native module system (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">known as ESM</a>). It is an alternative to heavier, more complex bundlers like webpack or Parcel in your development workflow.
+__Again, you probably want [Snowpack](https://github.com/snowpackjs/snowpack), not this.__
 
-### Key Features
+## Added
 
-- Develop faster, with a dev server that starts up in **50ms or less.**
-- See changes reflected [instantly in the browser.](https://www.snowpack.dev/concepts/hot-module-replacement)
-- Integrate your favorite bundler for a [production-optimized build.](https://www.snowpack.dev/concepts/build-pipeline)
-- Enjoy out-of-the-box support for [TypeScript, JSX, CSS Modules and more.](https://www.snowpack.dev/reference/supported-files)
-- Connect your favorite tools with [third-party plugins.](https://www.snowpack.dev/plugins)
+  - Support for custom TLS certificate file paths. [Discussion](https://github.com/snowpackjs/snowpack/discussions/2325). [Pull request](https://github.com/snowpackjs/snowpack/discussions/2325)
+  - Extensible resolve paths (multiple roots). [Discussion](https://github.com/snowpackjs/snowpack/discussions/2327). [Pull request](https://github.com/snowpackjs/snowpack/pull/2432)
+  - Svelte plugin support for `.interface` files. [Discussion](https://github.com/snowpackjs/snowpack/discussions/2360). [Pull request](https://github.com/snowpackjs/snowpack/pull/2380)
 
-**💁 More info at the official [Snowpack website ➞](https://snowpack.dev)**
+## Removed
 
-<br/>
+  - Removed Skypack
+  - Removed create-snowpack-app
+  - Removed release scripts
+  - Removed examples
+  - Removed the Snowpack web site
+  - Removed some plugins we won’t be using
 
-> **Contributor Guidelines:** [CONTRIBUTING.md](./CONTRIBUTING.md)  
-> **License:** [MIT](https://github.com/snowpackjs/snowpack/blob/main/LICENSE)
+## TODO
+
+  - __FIX:__ `loadConfigurationFile()` uses require; fails with snowpack configuration in type="module" Node projects. [Discussion](https://github.com/snowpackjs/snowpack/discussions/2510)
+  - __HMR:__ check if [setting the websocket port manually in the client](https://github.com/snowpackjs/snowpack/discussions/2288#discussioncomment-284878) still required with Fred’s PR [#2312](https://github.com/snowpackjs/snowpack/pull/2312). [Discussion](https://github.com/snowpackjs/snowpack/discussions/2288)
+
+## License
+
+Same as the original Snowpack license:
+
+[MIT](https://github.com/small-tech/snowflake/blob/main/LICENSE)
