@@ -1,1 +1,0 @@
-## 👉 [`create-snowpack-app`](./cli)
