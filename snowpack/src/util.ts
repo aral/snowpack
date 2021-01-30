@@ -9,19 +9,15 @@ import mkdirp from 'mkdirp';
 import open from 'open';
 import path from 'path';
 import rimraf from 'rimraf';
-import {SkypackSDK} from 'skypack';
 import url from 'url';
 import localPackageSource from './sources/local';
-import remotePackageSource from './sources/remote';
-import {ImportMap, LockfileManifest, PackageSource, SnowpackConfig} from './types';
+import {LockfileManifest, PackageSource, SnowpackConfig} from './types';
 
 export const GLOBAL_CACHE_DIR = globalCacheDir('snowpack');
 export const LOCKFILE_NAME = 'snowpack.deps.json';
 
 // We need to use eval here to prevent Rollup from detecting this use of `require()`
 export const NATIVE_REQUIRE = eval('require');
-
-export const remotePackageSDK = new SkypackSDK({origin: 'https://pkg.snowpack.dev'});
 
 // A note on cache naming/versioning: We currently version our global caches
 // with the version of the last breaking change. This allows us to re-use the
@@ -82,32 +78,6 @@ function sortObject<T>(originalObject: Record<string, T>): Record<string, T> {
   return newObject;
 }
 
-export function convertLockfileToSkypackImportMap(
-  origin: string,
-  lockfile: LockfileManifest,
-): ImportMap {
-  const result = {imports: {}};
-  for (const [key, val] of Object.entries(lockfile.lock)) {
-    result.imports[key.replace(/\#.*/, '')] = origin + '/' + val;
-    result.imports[key.replace(/\#.*/, '') + '/'] = origin + '/' + val + '/';
-  }
-  return result;
-}
-
-export function convertSkypackImportMapToLockfile(
-  dependencies: Record<string, string>,
-  importMap: ImportMap,
-): LockfileManifest {
-  const result = {dependencies, lock: {}};
-  for (const [key, val] of Object.entries(dependencies)) {
-    if (importMap.imports[key]) {
-      const valPath = url.parse(importMap.imports[key]).pathname;
-      result.lock[key + '#' + val] = valPath?.substr(1);
-    }
-  }
-  return result;
-}
-
 export async function writeLockfile(loc: string, importMap: LockfileManifest): Promise<void> {
   importMap.dependencies = sortObject(importMap.dependencies);
   importMap.lock = sortObject(importMap.lock);
@@ -118,8 +88,9 @@ export function isTruthy<T>(item: T | false | null | undefined): item is T {
   return Boolean(item);
 }
 
+// TODO: This is no longer required. Refactor where it’s being called to remove need of it. – Aral
 export function getPackageSource(source: 'remote' | 'local'): PackageSource {
-  return source === 'local' ? localPackageSource : remotePackageSource;
+  return localPackageSource;
 }
 
 /**
@@ -148,7 +119,7 @@ export function parsePackageImportSpecifier(imp: string): [string, string | null
 
 /**
  * Given a package name, look for that package's package.json manifest.
- * Return both the manifest location (if believed to exist) and the
+ * Return both the manifest location (if believed to exist) and the
  * manifest itself (if found).
  *
  * NOTE: You used to be able to require() a package.json file directly,
@@ -309,7 +280,6 @@ export async function clearCache() {
   return Promise.all([
     cacache.rm.all(BUILD_CACHE),
     localPackageSource.clearCache(),
-    remotePackageSource.clearCache(),
   ]);
 }
 

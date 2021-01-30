@@ -1,5 +1,19 @@
 # Changelog
 
+## Snowflake
+
+## v1.0
+
+  - Remove Skypack
+  - Remove create-snowpack-app
+  - Remove scripts
+  - Remove web site
+  - Remove some plugins we won’t be using
+
+---
+
+## Snowpack
+
 > _For older releses, check our curated [release update thread](https://github.com/snowpackjs/snowpack/discussions/1183) or the raw [commit history](https://github.com/snowpackjs/snowpack/commits/main/snowpack)._
 
 ## snowpack@3.0.6 [2021-01-13]

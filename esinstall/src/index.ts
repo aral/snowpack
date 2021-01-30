@@ -297,11 +297,7 @@ export async function install(
   }
   if (Object.keys(installEntrypoints).length === 0 && Object.keys(assetEntrypoints).length === 0) {
     throw new Error(`No ESM dependencies found!
-${colors.dim(
-  `  At least one dependency must have an ESM "module" entrypoint. You can find modern, web-ready packages at ${colors.underline(
-    'https://www.skypack.dev',
-  )}`,
-)}`);
+${colors.dim(`  At least one dependency must have an ESM "module" entrypoint.`,)}`);
   }
 
   await initESModuleLexer;

@@ -1,7 +1,6 @@
 import * as colors from 'kleur/colors';
 import util from 'util';
 import yargs from 'yargs-parser';
-import {addCommand, rmCommand} from './commands/add-rm';
 import {command as initCommand} from './commands/init';
 import {command as prepareCommand} from './commands/prepare';
 // import {command as installCommand} from './sources/local-install';
@@ -111,15 +110,6 @@ export async function cli(args: string[]) {
     config,
     lockfile,
   };
-
-  if (cmd === 'add') {
-    await addCommand(cliFlags['_'][3], commandOptions);
-    return process.exit(0);
-  }
-  if (cmd === 'rm') {
-    await rmCommand(cliFlags['_'][3], commandOptions);
-    return process.exit(0);
-  }
 
   if (cliFlags['_'].length > 3) {
     logger.error(`Unexpected multiple commands`);

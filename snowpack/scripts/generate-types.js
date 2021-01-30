@@ -1,5 +1,4 @@
 // copy esinstall types into ./types
-// copy skypack types into ./types
 // rewrite `from 'esinstall'` to `from '../types/esinstall';
 const fs = require('fs');
 const path = require('path');
@@ -60,5 +59,4 @@ function cleanup() {
 }
 
 bundleTypes('esinstall');
-bundleTypes('skypack');
 // cleanup(); TODO: Fix tests that rely on these util files
