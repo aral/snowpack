@@ -62,13 +62,8 @@ type DependencyLoc = {
 // We use "/index.js here to match the official package, but not any ESM aliase packages
 // that the user may have installed instead (ex: react-esm).
 const CJS_PACKAGES_TO_AUTO_DETECT = [
-  'react/index.js',
-  'react-dom/index.js',
-  'react-dom/server.js',
-  'react-is/index.js',
   'prop-types/index.js',
   'scheduler/index.js',
-  'react-table',
   'chai/index.js',
   'events/events.js',
 ];
